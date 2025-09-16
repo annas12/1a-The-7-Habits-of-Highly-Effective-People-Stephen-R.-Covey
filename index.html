@@ -30,55 +30,105 @@
         .dark-mode .text-gray-800 { color: #e5e5e5 !important; }
         .dark-mode .text-gray-600 { color: #a0a0a0 !important; }
         .dark-mode .text-gray-700 { color: #d0d0d0 !important; }
+        .dark-mode .text-gray-500 { color: #9ca3af !important; }
         .dark-mode .border-gray-200 { border-color: #404040 !important; }
         .dark-mode nav { background: #2d2d2d !important; border-color: #404040 !important; }
         .dark-mode .hover\:bg-purple-50:hover { background: #3d2d4d !important; }
         .dark-mode .hover\:bg-gray-50:hover { background: #3a3a3a !important; }
+        .dark-mode .hover\:bg-gray-100:hover { background: #404040 !important; }
+        .dark-mode #navigationDrawer { background: #2d2d2d !important; }
+        .dark-mode #navigationDrawer .bg-purple-100 { background: #4c1d95 !important; }
+        .dark-mode #navigationDrawer .text-purple-600 { color: #a855f7 !important; }
     </style>
 </head>
 <body class="bg-gray-50 transition-colors duration-300">
-    <!-- Header -->
-    <header class="gradient-bg text-white py-6 px-4 sticky top-0 z-50 shadow-lg">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                    <span class="text-xl font-bold">7H</span>
+    <!-- Navigation Drawer Overlay -->
+    <div id="drawerOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300" onclick="closeDrawer()"></div>
+    
+    <!-- Navigation Drawer -->
+    <div id="navigationDrawer" class="fixed top-0 left-0 h-full w-80 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="p-6">
+            <!-- Drawer Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                        <span class="text-xl font-bold text-purple-600">7H</span>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-lg text-gray-800">The 7 Habits</h2>
+                        <p class="text-sm text-gray-500">Stephen R. Covey</p>
+                    </div>
                 </div>
-                <h1 class="font-bold text-lg md:text-xl">The 7 Habits</h1>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button id="darkModeToggle" class="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
-                    <span class="text-lg">🌙</span>
+                <button onclick="closeDrawer()" class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <span class="text-xl text-gray-600">✕</span>
                 </button>
-                <button id="menuToggle" class="md:hidden p-2 bg-white/20 rounded-lg">
-                    <span class="text-lg">☰</span>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="space-y-2">
+                <button onclick="navigateFromDrawer('home')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">🏠</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Beranda</span>
+                </button>
+                <button onclick="navigateFromDrawer('contents')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">📚</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Daftar Isi</span>
+                </button>
+                <button onclick="navigateFromDrawer('habits')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">⭐</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">7 Kebiasaan</span>
+                </button>
+                <button onclick="navigateFromDrawer('notes')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">📝</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Catatan Saya</span>
+                </button>
+                <button onclick="navigateFromDrawer('conclusion')" class="drawer-nav-btn w-full flex items-center space-x-4 p-4 text-left hover:bg-purple-50 rounded-xl transition-colors group">
+                    <span class="text-2xl">🎯</span>
+                    <span class="font-medium text-gray-700 group-hover:text-purple-600">Kesimpulan</span>
+                </button>
+            </nav>
+            
+            <!-- Dark Mode Toggle in Drawer -->
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <button id="drawerDarkModeToggle" class="w-full flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-xl transition-colors">
+                    <span class="text-2xl">🌙</span>
+                    <span class="font-medium text-gray-700">Mode Gelap</span>
+                    <div class="ml-auto">
+                        <div class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300" id="drawerToggleTrack">
+                            <div class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-transform duration-300" id="drawerToggleThumb"></div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="gradient-bg text-white py-6 px-4 sticky top-0 z-30 shadow-lg">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-center">
+                <!-- Hamburger Menu Button -->
+                <button onclick="openDrawer()" class="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
+                    <span class="text-xl">☰</span>
+                </button>
+                
+                <!-- Center Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                        <span class="text-xl font-bold">7H</span>
+                    </div>
+                    <h1 class="font-bold text-lg md:text-xl">The 7 Habits</h1>
+                </div>
+                
+                <!-- Dark Mode Toggle -->
+                <button id="headerDarkModeToggle" class="p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors">
+                    <span class="text-lg">🌙</span>
                 </button>
             </div>
         </div>
     </header>
 
 
-
-    <!-- Mobile Navigation -->
-    <nav id="mobileNav" class="md:hidden bg-white shadow-lg fixed inset-x-0 top-20 z-40 transform -translate-y-full transition-transform duration-300">
-        <div class="px-4 py-4 space-y-2">
-            <button onclick="showSection('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
-                🏠 Beranda
-            </button>
-            <button onclick="showSection('contents'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
-                📚 Daftar Isi
-            </button>
-            <button onclick="showSection('habits'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
-                ⭐ 7 Kebiasaan
-            </button>
-            <button onclick="showSection('notes'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
-                📝 Catatan Saya
-            </button>
-            <button onclick="showSection('conclusion'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
-                🎯 Kesimpulan
-            </button>
-        </div>
-    </nav>
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 py-4">
@@ -103,24 +153,24 @@
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 <div class="bg-white p-6 rounded-xl shadow-lg card-hover text-center">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                        <span class="text-2xl">🎯</span>
+                    <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">🎯</span>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">Prinsip-Prinsip Dasar</h3>
                     <p class="text-gray-600 text-sm text-justify">Pelajari 7 kebiasaan fundamental yang mengubah cara pandang dan tindakan Anda</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl shadow-lg card-hover text-center">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                        <span class="text-2xl">🚀</span>
+                    <div class="w-20 h-20 bg-blue-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">🚀</span>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">Langkah Praktis</h3>
                     <p class="text-gray-600 text-sm text-justify">Setiap konsep dilengkapi dengan tips konkret yang bisa langsung diterapkan</p>
                 </div>
 
                 <div class="bg-white p-6 rounded-xl shadow-lg card-hover md:col-span-2 lg:col-span-1 text-center">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                        <span class="text-2xl">📈</span>
+                    <div class="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">📈</span>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-800 mb-2">Transformasi Diri</h3>
                     <p class="text-gray-600 text-sm text-justify">Bangun karakter dan kepemimpinan dari dalam diri menuju efektivitas sejati</p>
@@ -219,12 +269,125 @@
             </div>
         </section>
 
-        <!-- Habits Section -->
+        <!-- Habits Overview Section -->
         <section id="habitsSection" class="section hidden">
             <h2 class="subtitle-fluid font-bold text-gray-800 mb-8 text-center">⭐ 7 Kebiasaan Orang yang Sangat Efektif</h2>
             
-            <div class="space-y-8" id="habitsContainer">
-                <!-- Habits will be dynamically loaded here -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Habit cards will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Individual Habit Sections -->
+        <section id="habit1Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(7)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 7</button>
+                        <button onclick="showHabit(2)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 2 →</button>
+                    </div>
+                </div>
+                <div id="habit1Content"></div>
+            </div>
+        </section>
+
+        <section id="habit2Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(1)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 1</button>
+                        <button onclick="showHabit(3)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 3 →</button>
+                    </div>
+                </div>
+                <div id="habit2Content"></div>
+            </div>
+        </section>
+
+        <section id="habit3Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(2)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 2</button>
+                        <button onclick="showHabit(4)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 4 →</button>
+                    </div>
+                </div>
+                <div id="habit3Content"></div>
+            </div>
+        </section>
+
+        <section id="habit4Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(3)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 3</button>
+                        <button onclick="showHabit(5)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 5 →</button>
+                    </div>
+                </div>
+                <div id="habit4Content"></div>
+            </div>
+        </section>
+
+        <section id="habit5Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(4)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 4</button>
+                        <button onclick="showHabit(6)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 6 →</button>
+                    </div>
+                </div>
+                <div id="habit5Content"></div>
+            </div>
+        </section>
+
+        <section id="habit6Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(5)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 5</button>
+                        <button onclick="showHabit(7)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 7 →</button>
+                    </div>
+                </div>
+                <div id="habit6Content"></div>
+            </div>
+        </section>
+
+        <section id="habit7Section" class="section hidden">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <button onclick="showSection('habits')" class="flex items-center space-x-2 text-purple-600 hover:text-purple-700 transition-colors">
+                        <span>←</span>
+                        <span>Kembali ke Daftar</span>
+                    </button>
+                    <div class="flex space-x-2">
+                        <button onclick="showHabit(6)" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 transition-colors">← Habit 6</button>
+                        <button onclick="showHabit(1)" class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">Habit 1 →</button>
+                    </div>
+                </div>
+                <div id="habit7Content"></div>
             </div>
         </section>
 
@@ -322,8 +485,7 @@
         </section>
     </main>
 
-    <!-- Bottom Navigation (Mobile) -->
-    
+
 
     <script>
         // Data for the 7 Habits
@@ -467,6 +629,13 @@
 
         // Navigation functions
         function showSection(sectionName) {
+            // Scroll to top immediately
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+            
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
@@ -486,44 +655,104 @@
             // Update navigation
             setActiveNav(sectionName);
             
-            // Add padding bottom for mobile
-            if (window.innerWidth < 768) {
-                document.body.style.paddingBottom = '80px';
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
+            // Ensure scroll is at top after DOM updates
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant'
+                });
+            }, 10);
         }
 
         function setActiveNav(activeSection) {
-            // Desktop navigation
+            // Update navigation button states
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-purple-600', 'border-purple-600');
-                btn.classList.add('text-gray-600', 'border-transparent');
+                btn.classList.remove('bg-white/40');
+                btn.classList.add('bg-white/20');
             });
             
-            // Mobile bottom navigation
-            document.querySelectorAll('nav button').forEach(btn => {
-                btn.classList.remove('text-purple-600');
-                btn.classList.add('text-gray-600');
-            });
+            // Set active button
+            const activeBtn = document.querySelector(`button[onclick="showSection('${activeSection}')"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white/20');
+                activeBtn.classList.add('bg-white/40');
+            }
         }
 
-        function toggleMobileMenu() {
-            const mobileNav = document.getElementById('mobileNav');
-            mobileNav.classList.toggle('-translate-y-full');
+        // Drawer functions
+        function openDrawer() {
+            const drawer = document.getElementById('navigationDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            
+            overlay.classList.remove('hidden');
+            drawer.classList.remove('-translate-x-full');
+            
+            // Prevent body scroll when drawer is open
+            document.body.style.overflow = 'hidden';
         }
 
-        // Dark mode toggle
-        document.getElementById('darkModeToggle').addEventListener('click', function() {
+        function closeDrawer() {
+            const drawer = document.getElementById('navigationDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            
+            drawer.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }
+
+        function navigateFromDrawer(sectionName) {
+            closeDrawer();
+            setTimeout(() => {
+                showSection(sectionName);
+            }, 300); // Wait for drawer close animation
+        }
+
+
+
+        // Dark mode toggle functions
+        function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
-            this.innerHTML = isDark ? '<span class="text-lg">☀️</span>' : '<span class="text-lg">🌙</span>';
+            
+            // Update header toggle
+            const headerToggle = document.getElementById('headerDarkModeToggle');
+            headerToggle.innerHTML = isDark ? '<span class="text-lg">☀️</span>' : '<span class="text-lg">🌙</span>';
+            
+            // Update drawer toggle
+            const drawerToggle = document.getElementById('drawerDarkModeToggle');
+            const toggleTrack = document.getElementById('drawerToggleTrack');
+            const toggleThumb = document.getElementById('drawerToggleThumb');
+            
+            if (isDark) {
+                drawerToggle.querySelector('span').textContent = '☀️';
+                toggleTrack.classList.add('bg-purple-600');
+                toggleTrack.classList.remove('bg-gray-300');
+                toggleThumb.classList.add('translate-x-6');
+            } else {
+                drawerToggle.querySelector('span').textContent = '🌙';
+                toggleTrack.classList.remove('bg-purple-600');
+                toggleTrack.classList.add('bg-gray-300');
+                toggleThumb.classList.remove('translate-x-6');
+            }
+            
             localStorage.setItem('darkMode', isDark);
+        }
+
+        // Dark mode toggle event listeners
+        document.getElementById('headerDarkModeToggle').addEventListener('click', toggleDarkMode);
+        document.getElementById('drawerDarkModeToggle').addEventListener('click', toggleDarkMode);
+
+        // Close drawer when clicking outside or pressing Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDrawer();
+            }
         });
 
-        // Mobile menu toggle
-        document.getElementById('menuToggle').addEventListener('click', toggleMobileMenu);
+
 
         // Load random quote
         function loadRandomQuote() {
@@ -531,61 +760,116 @@
             document.getElementById('quoteText').textContent = randomQuote;
         }
 
-        // Load habits
+        // Load habits overview
         function loadHabits() {
-            const container = document.getElementById('habitsContainer');
+            const container = document.querySelector('#habitsSection .grid');
             container.innerHTML = '';
             
             habitsData.forEach(habit => {
-                const habitElement = createHabitElement(habit);
-                container.appendChild(habitElement);
+                const habitCard = createHabitCard(habit);
+                container.appendChild(habitCard);
+            });
+            
+            // Load individual habit pages
+            habitsData.forEach(habit => {
+                loadHabitPage(habit);
             });
         }
 
-        function createHabitElement(habit) {
+        function createHabitCard(habit) {
             const div = document.createElement('div');
-            div.className = 'bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto';
+            div.className = 'bg-white p-6 rounded-xl shadow-lg card-hover cursor-pointer';
+            div.onclick = () => showHabit(habit.id);
             div.innerHTML = `
-                <div class="p-8">
-                    <div class="text-center mb-8">
-                        <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center text-3xl mx-auto mb-4">
-                            ${habit.icon}
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Habit ${habit.id}: ${habit.title}</h3>
-                        <p class="text-purple-600 font-semibold text-lg">${habit.subtitle}</p>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                        <span class="text-4xl">${habit.icon}</span>
                     </div>
-                    
-                    <div class="space-y-8">
-                        <div class="text-center">
-                            <h4 class="font-bold text-gray-800 mb-4 text-lg">💡 Inti Konsep</h4>
-                            <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.concept}</p>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Habit ${habit.id}</h3>
+                    <h4 class="text-purple-600 font-semibold mb-3">${habit.title}</h4>
+                    <p class="text-sm text-gray-600 mb-4 text-justify">${habit.concept}</p>
+                    <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium">
+                        Pelajari Detail →
+                    </button>
+                </div>
+            `;
+            return div;
+        }
+
+        function loadHabitPage(habit) {
+            const container = document.getElementById(`habit${habit.id}Content`);
+            container.innerHTML = `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-8">
+                        <div class="text-center mb-8">
+                            <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6">
+                                ${habit.icon}
+                            </div>
+                            <h1 class="text-3xl font-bold text-gray-800 mb-2">Habit ${habit.id}: ${habit.title}</h1>
+                            <p class="text-purple-600 font-semibold text-xl">${habit.subtitle}</p>
                         </div>
                         
-                        <div class="text-center">
-                            <h4 class="font-bold text-gray-800 mb-4 text-lg">📖 Penjelasan Detail</h4>
-                            <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.detail}</p>
-                        </div>
-                        
-                        <div class="text-center">
-                            <h4 class="font-bold text-gray-800 mb-4 text-lg">🎯 Contoh Penerapan</h4>
-                            <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.example}</p>
-                        </div>
-                        
-                        <div class="text-center">
-                            <h4 class="font-bold text-gray-800 mb-4 text-lg">🚀 Tips Praktis</h4>
-                            <ul class="space-y-3 max-w-3xl mx-auto">
-                                ${habit.tips.map(tip => `<li class="flex items-start space-x-3 text-left"><span class="text-purple-500 mt-1 text-lg">•</span><span class="text-gray-600 leading-relaxed">${tip}</span></li>`).join('')}
-                            </ul>
-                        </div>
-                        
-                        <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl text-center max-w-3xl mx-auto">
-                            <h4 class="font-bold text-purple-800 mb-4 text-lg">✨ Insight Tambahan</h4>
-                            <p class="text-purple-700 italic leading-relaxed text-justify">"${habit.insight}"</p>
+                        <div class="space-y-8">
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">💡 Inti Konsep</h2>
+                                <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify text-lg">${habit.concept}</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">📖 Penjelasan Detail</h2>
+                                <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.detail}</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">🎯 Contoh Penerapan</h2>
+                                <p class="text-gray-600 leading-relaxed max-w-3xl mx-auto text-justify">${habit.example}</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <h2 class="font-bold text-gray-800 mb-4 text-xl">🚀 Tips Praktis</h2>
+                                <ul class="space-y-4 max-w-3xl mx-auto">
+                                    ${habit.tips.map(tip => `<li class="flex items-start space-x-3 text-left"><span class="text-purple-500 mt-1 text-xl">•</span><span class="text-gray-600 leading-relaxed">${tip}</span></li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-8 rounded-xl text-center max-w-3xl mx-auto">
+                                <h2 class="font-bold text-purple-800 mb-4 text-xl">✨ Insight Tambahan</h2>
+                                <p class="text-purple-700 italic leading-relaxed text-justify text-lg">"${habit.insight}"</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             `;
-            return div;
+        }
+
+        // Show specific habit page
+        function showHabit(habitId) {
+            // Scroll to top immediately
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'instant'
+            });
+            
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show specific habit section
+            document.getElementById(`habit${habitId}Section`).classList.remove('hidden');
+            
+            // Hide daily quote
+            document.getElementById('dailyQuote').classList.add('hidden');
+            
+            // Ensure scroll is at top after DOM updates
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: 'instant'
+                });
+            }, 10);
         }
 
         // Checklist functionality
@@ -679,22 +963,22 @@
         // Load dark mode preference
         if (localStorage.getItem('darkMode') === 'true') {
             document.body.classList.add('dark-mode');
-            document.getElementById('darkModeToggle').innerHTML = '<span class="text-lg">☀️</span>';
+            
+            // Update header toggle
+            document.getElementById('headerDarkModeToggle').innerHTML = '<span class="text-lg">☀️</span>';
+            
+            // Update drawer toggle
+            const drawerToggle = document.getElementById('drawerDarkModeToggle');
+            const toggleTrack = document.getElementById('drawerToggleTrack');
+            const toggleThumb = document.getElementById('drawerToggleThumb');
+            
+            drawerToggle.querySelector('span').textContent = '☀️';
+            toggleTrack.classList.add('bg-purple-600');
+            toggleTrack.classList.remove('bg-gray-300');
+            toggleThumb.classList.add('translate-x-6');
         }
 
-        // Handle mobile navigation
-        if (window.innerWidth < 768) {
-            document.body.style.paddingBottom = '80px';
-        }
 
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth < 768) {
-                document.body.style.paddingBottom = '80px';
-            } else {
-                document.body.style.paddingBottom = '0';
-            }
-        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fdfbbf147c585b',t:'MTc1ODAwMDc0Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97feb331b690fd9f',t:'MTc1ODAwODI2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
