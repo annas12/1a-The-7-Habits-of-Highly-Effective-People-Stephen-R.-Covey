@@ -29,7 +29,11 @@
         .dark-mode .bg-white { background: #2d2d2d !important; }
         .dark-mode .text-gray-800 { color: #e5e5e5 !important; }
         .dark-mode .text-gray-600 { color: #a0a0a0 !important; }
+        .dark-mode .text-gray-700 { color: #d0d0d0 !important; }
         .dark-mode .border-gray-200 { border-color: #404040 !important; }
+        .dark-mode nav { background: #2d2d2d !important; border-color: #404040 !important; }
+        .dark-mode .hover\:bg-purple-50:hover { background: #3d2d4d !important; }
+        .dark-mode .hover\:bg-gray-50:hover { background: #3a3a3a !important; }
     </style>
 </head>
 <body class="bg-gray-50 transition-colors duration-300">
@@ -54,7 +58,7 @@
     </header>
 
     <!-- Navigation -->
-    <nav id="navigation" class="bg-white shadow-sm border-b border-gray-200 hidden md:block">
+    <nav id="navigation" class="bg-white shadow-sm border-b border-gray-200 hidden md:block sticky top-20 z-40">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex space-x-8 overflow-x-auto py-4">
                 <button onclick="showSection('home')" class="nav-btn whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 transition-colors">
@@ -98,7 +102,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8">
+    <main class="max-w-6xl mx-auto px-4 py-4">
         <!-- Quote of the Day -->
         <div id="dailyQuote" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-xl mb-8 shadow-lg">
             <div class="flex items-start space-x-4">
@@ -530,6 +534,9 @@
             if (window.innerWidth < 768) {
                 document.body.style.paddingBottom = '80px';
             }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         }
 
         function setActiveNav(activeSection) {
@@ -733,5 +740,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fda67042cd88ff',t:'MTc1Nzk5NzI1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97fdbd7e9199ce66',t:'MTc1Nzk5ODE5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
