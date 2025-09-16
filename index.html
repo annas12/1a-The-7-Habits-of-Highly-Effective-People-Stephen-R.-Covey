@@ -57,30 +57,28 @@
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav id="navigation" class="bg-white shadow-sm border-b border-gray-200 sticky top-20 z-40">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex space-x-8 overflow-x-auto py-4">
-                <button onclick="showSection('home')" class="nav-btn whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 transition-colors">
-                    🏠 Beranda
-                </button>
-                <button onclick="showSection('contents')" class="nav-btn whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 transition-colors">
-                    📚 Daftar Isi
-                </button>
-                <button onclick="showSection('habits')" class="nav-btn whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 transition-colors">
-                    ⭐ 7 Kebiasaan
-                </button>
-                <button onclick="showSection('notes')" class="nav-btn whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 transition-colors">
-                    📝 Catatan Saya
-                </button>
-                <button onclick="showSection('conclusion')" class="nav-btn whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600 hover:text-purple-600 border-b-2 border-transparent hover:border-purple-600 transition-colors">
-                    🎯 Kesimpulan
-                </button>
-            </div>
+  
+
+    <!-- Mobile Navigation -->
+    <nav id="mobileNav" class="md:hidden bg-white shadow-lg fixed inset-x-0 top-20 z-40 transform -translate-y-full transition-transform duration-300">
+        <div class="px-4 py-4 space-y-2">
+            <button onclick="showSection('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
+                🏠 Beranda
+            </button>
+            <button onclick="showSection('contents'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
+                📚 Daftar Isi
+            </button>
+            <button onclick="showSection('habits'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
+                ⭐ 7 Kebiasaan
+            </button>
+            <button onclick="showSection('notes'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
+                📝 Catatan Saya
+            </button>
+            <button onclick="showSection('conclusion'); toggleMobileMenu()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-purple-50 rounded-lg transition-colors">
+                🎯 Kesimpulan
+            </button>
         </div>
     </nav>
-
-   
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 py-4">
@@ -325,7 +323,7 @@
     </main>
 
     <!-- Bottom Navigation (Mobile) -->
- 
+   
 
     <script>
         // Data for the 7 Habits
